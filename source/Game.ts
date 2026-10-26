@@ -14,8 +14,6 @@ class Game {
   private beeSpeed_: number;
   private beeStrength_: number;
   private endScreen_: HTMLElement;
-  private gold_: any;
-  private code_: string;
 
   public constructor(game: HTMLElement) {
     this.element_ = game;
@@ -36,7 +34,6 @@ class Game {
   public start(){
     this.hive_ = new Hive(this);
     this.upgrades_ = new Upgrades(this);
-    this.getGold(1);
   }
 
   public getElement(){
@@ -113,23 +110,5 @@ class Game {
 
   public displayEndScreen(){
     this.endScreen_.style.display = "flex";
-  }
-
-  private getGold(id: number){
-    let request : XMLHttpRequest = new XMLHttpRequest();
-    let parameters : string = "id=" + id;
-    request.open("get", "http://192.168.56.107/~sae/gold/api.php?" + parameters);
-    request.onreadystatechange = () => {
-    if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-      this.gold_ = JSON.parse(request.responseText);
-      this.getCode();
-    }
-    };
-    request.send()
-  }
-
-  private getCode(){
-    this.code_ = this.gold_.code;
-    document.getElementById("code").textContent = this.code_;
   }
 }

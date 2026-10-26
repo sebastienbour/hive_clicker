@@ -18,7 +18,6 @@ class Game {
     start() {
         this.hive_ = new Hive(this);
         this.upgrades_ = new Upgrades(this);
-        this.getGold(1);
     }
     getElement() {
         return this.element_;
@@ -83,21 +82,5 @@ class Game {
     }
     displayEndScreen() {
         this.endScreen_.style.display = "flex";
-    }
-    getGold(id) {
-        let request = new XMLHttpRequest();
-        let parameters = "id=" + id;
-        request.open("get", "http://192.168.56.107/~sae/gold/api.php?" + parameters);
-        request.onreadystatechange = () => {
-            if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
-                this.gold_ = JSON.parse(request.responseText);
-                this.getCode();
-            }
-        };
-        request.send();
-    }
-    getCode() {
-        this.code_ = this.gold_.code;
-        document.getElementById("code").textContent = this.code_;
     }
 }
